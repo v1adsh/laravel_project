@@ -19,6 +19,7 @@ class Application extends Model
      *
      * @var array
      */
+
     protected $fillable = [
         'user_id',
         'status_id',
