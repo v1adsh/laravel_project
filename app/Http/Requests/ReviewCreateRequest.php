@@ -13,18 +13,25 @@ class ReviewCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Get the validation rules that apply to the request.Так
      *
      * @return array
      */
     public function rules()
     {
         return [
-            //
+
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+
         ];
     }
 }

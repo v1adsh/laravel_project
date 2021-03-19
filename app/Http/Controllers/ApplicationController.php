@@ -21,7 +21,7 @@ class ApplicationController extends Controller
     public function store(ApplicationCreateRequest $request){
         $application = new Application();
         $application->user_id = $request->get('user_id');
-        $application->status_id = $request->get('status_id') ? $request->get('role_id') : 1;
+        $application->status_id = $request->get('status_id') ? $request->get('status_id') : 1;
         $application->description = $request->get('description');
 
         if (!$application->save()) {
