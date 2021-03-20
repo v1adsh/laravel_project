@@ -21,4 +21,9 @@ class ReviewController extends Controller
 
         return response()->json(['message'=>$review->jsonSerialize()]);
     }
+
+    public function show()
+    {
+        return response()->json(Review::all(), 200);
+    }
 }

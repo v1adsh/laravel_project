@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,12 @@ Route::get('authLogout', [AuthController::class, 'logout']);
 
 Route::get('application/{id}', [ApplicationController::class, 'showById']);
 Route::get('application', [ApplicationController::class, 'show']);
+Route::post('application', [ApplicationController::class, 'store']);
+Route::post('application', [ApplicationController::class, 'delete']);
 
 Route::post('userStore', [UserController::class, 'store']);
 Route::post('userDelete/{user}', [UserController::class, 'delete']);
+
+Route::post('review', [ReviewController::class, 'show']);
+Route::post('review', [ReviewController::class, 'create']);
 

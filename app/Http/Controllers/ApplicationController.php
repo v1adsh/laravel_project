@@ -10,13 +10,13 @@ use App\Models\User;
 
 class ApplicationController extends Controller
 {
-//    public function showById($id) {
-//        return response()->json(Status::find($id), 200);
-//    }
-//
-//    public function show() {
-//        return response()->json(Status::all(), 200);
-//    }
+    public function showById($id) {
+        return response()->json(Application::find($id), 200);
+    }
+
+    public function show() {
+        return response()->json(Application::all(), 200);
+    }
 
     public function store(ApplicationCreateRequest $request){
         $application = new Application();
@@ -31,19 +31,11 @@ class ApplicationController extends Controller
         return response()->json(['message'=>$application->jsonSerialize()]);
     }
 
-//    public function delete(User $user) {
-//        if ($user->delete()) {
-//            return response()->json($user->login . ' удалён', 200);
-//        }
-//
-//        return response()->json(['message' => 'Пользователь не удалён'], 500);
-//    }
-
     public function delete(Application $application) {
         if ($application->delete()) {
-            return response()->json('Заявка удалён', 200);
+            return response()->json('Заявка удалёна', 200);
         }
 
-        return response()->json(['message' => 'Пользователь не удалён'], 500);
+        return response()->json(['message' => 'Заявка не удалёна'], 500);
     }
 }
