@@ -21,18 +21,18 @@ class AuthController extends Controller
             return response()->json(['message'=>'Попытка входа не удалась'], 400);
         }
 
-        $user->createToken('api_token')->plainTextToken;
+        $token = $user->createToken('api_token')->plainTextToken;
 
-        return response()->json(['message'=>$user->api_token]);
+        return response()->json(['message'=>$token], 200);
     }
 
     public function store(UserCreateRequest $request){
-        $user = new User();
-        $user->login = $request->get('login');
-        $user->password = Hash::make($request->get('password'));
-        $user->email = $request->get('email');
+        $user               = new User();
+        $user->login        = $request->get('login');
+        $user->password     = Hash::make($request->get('password'));
+        $user->email        = $request->get('email');
         $user->number_phone = $request->get('number_phone');
-        $user->role_id = 1;
+        $user->role_id      = 1;
 
         if (!$user->save()) {
             return response()->json(['message'=>'Регистрация не удалась']);
@@ -41,9 +41,8 @@ class AuthController extends Controller
         return response()->json(['message'=>$user->jsonSerialize()]);
     }
 
-    public function logout($api_token) {
-        User::deleted($api_token);
-        auth()->logout();
+    public function logout(User $user) {
+        $user->api_token->delete();
         $this->save();
     }
 }

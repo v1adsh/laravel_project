@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property integer $status Статус
+ * @property string $name Название статуса
+ */
+
 class Status extends Model
 {
     use HasFactory, Notifiable;

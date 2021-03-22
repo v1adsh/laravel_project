@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
+ * @property integer $id Идентификатор
  * @property string $login Логин пользователя
  * @property string $password Пароль пользователя
  * @property string $email Email пользователя

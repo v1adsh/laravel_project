@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property integer $estimation Оценка
+ * @property string $name Название оценки
+ */
+
 class ReviewRating extends Model
 {
     use HasFactory, Notifiable;

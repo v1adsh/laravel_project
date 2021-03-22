@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Application;
 use App\Models\Status;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -18,14 +19,14 @@ class ApplicationController extends Controller
         return response()->json(Application::all(), 200);
     }
 
-    public function store(ApplicationCreateRequest $request){
-        $application = new Application();
-        $application->user_id = $request->get('user_id');
-        $application->status_id = $request->get('status_id') ? $request->get('status_id') : 1;
-        $application->description = $request->get('description');
+    public function store(ApplicationCreateRequest $request, User $user){
+        $application                = new Application();
+        $application->user_id       = Auth::id();
+        $application->status_id     = 1;
+        $application->description   = $request->get('description');
 
         if (!$application->save()) {
-            return response()->json(['message'=>'Заявка не отправлена']);
+            return response()->json(['message'=>'Заявка не отправлена'], 500);
         }
 
         return response()->json(['message'=>$application->jsonSerialize()]);

@@ -13,7 +13,7 @@ class UserController extends Controller
     public function store(UserCreateRequest $request){
         $user = new User();
         $user->login        = $request->get('login');
-        $user->password     = $request->get('password');
+        $user->password     = Hash::make($request->get('password'));
         $user->email        = $request->get('email');
         $user->number_phone = $request->get('number_phone');
         $user->role_id      = $request->get('role_id') ? $request->get('role_id') : 1;
