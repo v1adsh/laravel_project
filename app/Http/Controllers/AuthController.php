@@ -32,7 +32,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->get('password'));
         $user->email = $request->get('email');
         $user->number_phone = $request->get('number_phone');
-        $user->role_id = $request->get('role_id') ? $request->get('role_id') : 1;
+        $user->role_id = 1;
 
         if (!$user->save()) {
             return response()->json(['message'=>'Регистрация не удалась']);

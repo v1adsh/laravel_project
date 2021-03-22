@@ -38,4 +38,9 @@ class ApplicationController extends Controller
 
         return response()->json(['message' => 'Заявка не удалёна'], 500);
     }
+
+//    public function updateStatus(Application $application)
+//    {
+//        if ($application->status_id)
+//    }
 }
