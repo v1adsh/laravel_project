@@ -28,18 +28,25 @@ Route::middleware('auth:sanctum')->get('user', function (UserLoginRequest $reque
     return response()->json(['login' => $request->user()->login]);
 });
 
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('test', function () {
+        return view('test');
+    });
+});
+
 Route::post('auth', [AuthController::class, 'auth']);
 Route::post('authStore', [AuthController::class, 'store']);
-Route::get('authLogout', [AuthController::class, 'logout']);
+Route::get('authLogout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 Route::get('application/{id}', [ApplicationController::class, 'showById']);
 Route::get('application', [ApplicationController::class, 'show']);
 Route::post('applicationStore', [ApplicationController::class, 'store']);
 Route::post('applicationDelete', [ApplicationController::class, 'delete']);
 
-Route::post('userStore', [UserController::class, 'store']);
 Route::post('userDelete/{user}', [UserController::class, 'delete']);
+Route::post('userStore', [UserController::class, 'store']);
 
 Route::post('review', [ReviewController::class, 'show']);
 Route::post('reviewCreate', [ReviewController::class, 'create']);
+
 
