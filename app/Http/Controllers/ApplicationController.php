@@ -20,17 +20,16 @@ class ApplicationController extends Controller
     }
 
     public function store(ApplicationCreateRequest $request, User $user){
-        return $user->api_token;
-//        $application                = new Application();
-//        $application->user_id       = Auth::id();
-//        $application->status_id     = 1;
-//        $application->description   = $request->get('description');
-//
-//        if (!$application->save()) {
-//            return response()->json(['message'=>'Заявка не отправлена'], 500);
-//        }
-//
-//        return response()->json(['message'=>$application->jsonSerialize()]);
+        $application                = new Application();
+        $application->user_id       = Auth::id();
+        $application->status_id     = 1;
+        $application->description   = $request->get('description');
+
+        if (!$application->save()) {
+            return response()->json(['message'=>'Заявка не отправлена'], 500);
+        }
+
+        return response()->json(['message'=>$application->jsonSerialize()]);
     }
 
     public function delete(Application $application) {

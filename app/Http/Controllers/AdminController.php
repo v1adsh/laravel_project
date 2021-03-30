@@ -43,5 +43,19 @@ class AdminController extends Controller
         $user->email = $request->input('email');
         $user->number_phone = $request->input('number_phone');
         $user->assignRole($request->input('role'));
+
+        if (!$user->save()) {
+            return response()->json(['message'=>'Обновить данные пользователя не удалось']);
+        }
+
+        return response()->json(['message'=>$user->jsonSerialize()]);
+    }
+
+    public function show(){
+        return response()->json(User::all(), 200);
+    }
+
+    public function showById($id){
+        return response()->json(User::query()->find($id), 200);
     }
 }

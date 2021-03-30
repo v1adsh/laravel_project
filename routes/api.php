@@ -43,9 +43,15 @@ Route::get('application', [ApplicationController::class, 'show']);
 Route::post('applicationStore', [ApplicationController::class, 'store']);
 Route::post('applicationDelete', [ApplicationController::class, 'delete']);
 
-Route::post('userDelete/{user}', [AdminController::class, 'delete']);
+//Route::post('userDelete/{user}', [AdminController::class, 'delete']);
 Route::post('userStore', [AdminController::class, 'store']);
+Route::get('user', [AdminController::class, 'show']);
+Route::get('user/{id}', [AdminController::class, 'showById']);
 
-Route::get('review', [ReviewController::class, 'show']);
+Route::get('review', [ReviewController::class, 'showReview']);
+Route::get('review/{id}', [ReviewController::class, 'showReviewById']);
 Route::post('reviewStore', [ReviewController::class, 'store']);
-Route::post('review/{id}', [ReviewController::class, 'update']);
+Route::post('reviewUpdate/{id}', [ReviewController::class, 'updateReview']);
+Route::post('reviewRatingUpdate/{id}', [ReviewController::class, 'updateReviewRating']);
+Route::get('reviewRating', [ReviewController::class, 'showReviewRating']);
+Route::get('reviewRating/{id}', [ReviewController::class, 'showReviewRatingById']);

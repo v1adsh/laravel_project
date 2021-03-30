@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReviewCreateRequest;
 use App\Http\Requests\ReviewUpdateRequest;
 use App\Models\Review;
+use App\Models\ReviewRating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,12 +25,17 @@ class ReviewController extends Controller
         return response()->json(['message'=>$review->jsonSerialize()]);
     }
 
-    public function show()
+    public function showReview()
     {
         return response()->json(Review::all(), 200);
     }
 
-    public function update($id, ReviewUpdateRequest $request){
+    public function showReviewById($id)
+    {
+        return response()->json(Review::query()->find($id), 200);
+    }
+
+    public function updateReview($id, ReviewUpdateRequest $request){
         $review                     = Review::query()->find($id);
         $review->user_id            = Auth::id();
         $review->review_rating_id   = null;
@@ -41,5 +47,25 @@ class ReviewController extends Controller
         }
 
         return response()->json(['message'=>$review->jsonSerialize()]);
+    }
+
+    public function updateEstimation($id, ReviewUpdateRequest $request){
+        $review = Review::query()->find($id);
+        $review->review_rating_id   = $request->input('estimation');
+
+        if (!$review->save()) {
+            return response()->json(['message'=>'Оценить отзыв не удалось']);
+        }
+
+        return response()->json(['message' => $review->jsonSerialize()]);
+    }
+
+    public function showReviewRating()
+    {
+        return response()->json(ReviewRating::all(), 200);
+    }
+
+    public function showReviewRatingById($id){
+        return response()->json(ReviewRating::query()->find($id));
     }
 }
