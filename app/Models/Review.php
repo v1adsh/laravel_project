@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * @property integer $user_id
- * @property integer $review_rating_id
- * @property integer $datetime
- * @property string $description
+ * @property integer $user_id Идентификатор пользователя
+ * @property integer $review_rating_id Идентификатор оценки отзыва
+ * @property integer $datetime Дата и время
+ * @property string $description Описание
  */
 
 class Review extends Model
