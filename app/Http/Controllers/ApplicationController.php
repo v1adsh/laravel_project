@@ -16,32 +16,41 @@ class ApplicationController extends Controller
     }
 
     public function show() {
+
+
         return response()->json(Application::all(), 200);
     }
 
-    public function store(ApplicationCreateRequest $request, User $user){
+    public function store(ApplicationCreateRequest $request){
         $application                = new Application();
         $application->user_id       = Auth::id();
         $application->status_id     = 1;
         $application->description   = $request->get('description');
-
         if (!$application->save()) {
             return response()->json(['message'=>'Заявка не отправлена'], 500);
         }
-
+//
         return response()->json(['message'=>$application->jsonSerialize()]);
     }
 
     public function delete(Application $application) {
         if ($application->delete()) {
-            return response()->json('Заявка удалёна', 200);
+            return response()->json(['message' => 'Заявка удалена'], 200);
+        } elseif (!$application) {
+            return response()->json(['message' => 'Такой заявки нет'], 404);
         }
-
         return response()->json(['message' => 'Заявка не удалёна'], 500);
     }
 
-//    public function updateStatus(Application $application)
-//    {
-//        if ($application->status_id)
-//    }
+    public function updateStatus($id, Request $request)
+    {
+        $application = Application::query()->find($id);
+        $application->status_id = $request->input('status_id');
+        $application->save();
+        //if (!$application->save) {
+        //    return response()->json(['message' => 'Не удалось изменить заявку']);
+        //}
+
+        return response()->json(['message' => 'Статус заявки изменён']);
+    }
 }

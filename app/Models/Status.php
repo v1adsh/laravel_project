@@ -28,4 +28,8 @@ class Status extends Model
         'status',
         'name',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\Application');
+    }
 }

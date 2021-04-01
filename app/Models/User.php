@@ -43,4 +43,8 @@ class User extends Authenticatable
         'api_token',
         'role_id'
     ];
+
+    public function application(){
+        return $this->hasMany('App\Application');
+    }
 }

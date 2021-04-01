@@ -29,9 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('test', function () {
-        return view('test');
-    });
+
 });
 
 Route::post('login', [AuthController::class, 'login']);
@@ -42,6 +40,7 @@ Route::get('application/{id}', [ApplicationController::class, 'showById']);
 Route::get('application', [ApplicationController::class, 'show']);
 Route::post('applicationStore', [ApplicationController::class, 'store'])->middleware('auth:sanctum');
 Route::post('applicationDelete/{application}', [ApplicationController::class, 'delete'])->middleware('auth:sanctum');
+Route::post('applicationUpdate/{application}', [ApplicationController::class, 'updateStatus'])->middleware('auth:sanctum');
 
 //Route::post('userDelete/{user}', [AdminController::class, 'delete']);
 Route::post('userStore', [AdminController::class, 'store']);

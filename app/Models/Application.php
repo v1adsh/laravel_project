@@ -31,4 +31,12 @@ class Application extends Model
         'status_id',
         'description',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function status(){
+        return $this->hasOne('App\Status');
+    }
 }
