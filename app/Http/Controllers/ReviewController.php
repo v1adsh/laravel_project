@@ -14,10 +14,10 @@ class ReviewController extends Controller
     public function store(ReviewCreateRequest $request){
         $review                     = new Review();
         $review->user_id            = Auth::id();
-        $review->review_rating_id   = null;
-        $review->datetime           = date("F j, Y");
+        $review->review_rating_id   = 0;
+        $review->datetime           = date("d.m.Y", time());
         $review->description        = $request->get('description');
-
+        
         if (!$review->save()) {
             return response()->json(['message'=>'Отзыв не отправлен']);
         }

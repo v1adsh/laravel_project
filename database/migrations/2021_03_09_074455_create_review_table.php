@@ -17,7 +17,7 @@ class CreateReviewTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('review_rating_id')->default(null);
-            $table->dateTime('datetime');
+            $table->string('datetime');
             $table->text('description');
         });
     }

@@ -28,4 +28,8 @@ class ReviewRating extends Model
         'estimation',
         'name',
     ];
+
+    public function review(){
+        return $this->belongsTo('App\Review');
+    }
 }

@@ -21,8 +21,6 @@ class Review extends Model
 
     protected $table = 'review';
 
-    protected $hidden = ['user_id', 'review_rating_id', 'datetime'];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -34,4 +32,12 @@ class Review extends Model
         'datetime',
         'description',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function reviewRating(){
+        return $this->hasOne('App\ReviewRating');
+    }
 }
