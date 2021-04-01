@@ -34,10 +34,10 @@ class Review extends Model
     ];
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Model\User');
     }
 
     public function reviewRating(){
-        return $this->hasOne('App\ReviewRating');
+        return $this->hasOne('App\Model\ReviewRating');
     }
 }

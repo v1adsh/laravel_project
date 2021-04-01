@@ -45,10 +45,10 @@ class User extends Authenticatable
     ];
 
     public function application(){
-        return $this->hasMany('App\Application');
+        return $this->hasMany('App\Model\Application');
     }
 
     public function review(){
-        return $this->hasMany('App\Review');
+        return $this->hasMany('App\Model\Review');
     }
 }

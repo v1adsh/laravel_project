@@ -33,10 +33,10 @@ class Application extends Model
     ];
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Model\User');
     }
 
     public function status(){
-        return $this->hasOne('App\Status');
+        return $this->hasOne('App\Model\Status');
     }
 }

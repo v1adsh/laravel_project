@@ -30,6 +30,6 @@ class ReviewRating extends Model
     ];
 
     public function review(){
-        return $this->belongsTo('App\Review');
+        return $this->belongsTo('App\Model\Review');
     }
 }
