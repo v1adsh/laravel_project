@@ -16,7 +16,7 @@ class CreateReviewTable extends Migration
         Schema::create('review', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('review_rating_id')->default(null);
+            $table->unsignedBigInteger('review_rating_id')->nullable();
             $table->string('datetime');
             $table->text('description');
         });

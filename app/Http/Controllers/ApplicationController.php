@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
-    public function showById($id) {
-        return response()->json(Application::find($id), 200);
-    }
+    //public function showById($id) {
+    //    return response()->json(Application::find($id), 200);
+    //}
 
     public function show() {
-
-
-        return response()->json(Application::all(), 200);
+        return response()->json(Application::query()->where('user_id', Auth::id())->get(), 200);
     }
 
     public function store(ApplicationCreateRequest $request){
@@ -34,23 +32,13 @@ class ApplicationController extends Controller
     }
 
     public function delete(Application $application) {
-        if ($application->delete()) {
-            return response()->json(['message' => 'Заявка удалена'], 200);
-        } elseif (!$application) {
-            return response()->json(['message' => 'Такой заявки нет'], 404);
+        if ($application->user_id == Auth::id()) {
+            if ($application->delete()) {
+                return response()->json(['message' => 'Заявка удалена'], 200);
+            } elseif (!$application) {
+                return response()->json(['message' => 'Такой заявки нет'], 404);
+            }
         }
-        return response()->json(['message' => 'Заявка не удалёна'], 500);
-    }
-
-    public function updateStatus($id, Request $request)
-    {
-        $application = Application::query()->find($id);
-        $application->status_id = $request->input('status_id');
-        $application->save();
-        //if (!$application->save) {
-        //    return response()->json(['message' => 'Не удалось изменить заявку']);
-        //}
-
-        return response()->json(['message' => 'Статус заявки изменён']);
+        return response()->json(['message' => 'Вы не можете удалить чужую заявку'], 500);
     }
 }
