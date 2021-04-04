@@ -37,7 +37,7 @@ class ReviewController extends Controller
 
     public function updateReview($id, Request $request)
     {
-        $review                     = Review::query()->find($id);
+        $review                         = Review::query()->find($id);
         if ($review->user_id == Auth::id()) {
             $review->datetime           = date("d.m.Y", time());
             $review->description        = $request->input('description');
@@ -83,4 +83,9 @@ class ReviewController extends Controller
     //public function showReviewRatingById($id){
     //    return response()->json(ReviewRating::query()->find($id));
     //}
+
+    public function storeEstimation($id, Request $request){
+        $reviewRating = ReviewRating::query()->find($id);
+        $reviewRating->estimation++;
+    }
 }

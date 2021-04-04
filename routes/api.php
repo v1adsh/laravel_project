@@ -29,7 +29,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['role:admin']], function () {
-
+    Route::get('user', [AdminController::class, 'show'])->middleware('auth:sanctum');
+    Route::post('userUpdate/{user}', [AdminController::class, 'update'])->middleware('auth:sanctum');
+    Route::post('userStore', [AdminController::class, 'store'])->middleware('auth:sanctum');
+    Route::get('user/{id}', [AdminController::class, 'showById'])->middleware('auth:sanctum');
+    Route::post('userDelete/{user}', [AdminController::class, 'delete'])->middleware('auth:sanctum');
+    Route::post('applicationUpdate/{application}', [AdminController::class, 'updateStatus'])->middleware('auth:sanctum');
 });
 
 Route::post('login', [AuthController::class, 'login']);
@@ -40,14 +45,6 @@ Route::get('authLogout', [AuthController::class, 'logout'])->middleware('auth:sa
 Route::get('application', [ApplicationController::class, 'show'])->middleware('auth:sanctum');
 Route::post('applicationStore', [ApplicationController::class, 'store'])->middleware('auth:sanctum');
 Route::post('applicationDelete/{application}', [ApplicationController::class, 'delete'])->middleware('auth:sanctum');
-
-Route::post('userUpdate/{user}', [AdminController::class, 'update'])->middleware('auth:sanctum');
-Route::post('userStore', [AdminController::class, 'store'])->middleware('auth:sanctum');
-Route::get('user', [AdminController::class, 'show'])->middleware('auth:sanctum');
-Route::get('user/{id}', [AdminController::class, 'showById'])->middleware('auth:sanctum');
-Route::post('userDelete/{user}', [AdminController::class, 'delete'])->middleware('auth:sanctum');
-Route::post('applicationUpdate/{application}', [AdminController::class, 'updateStatus'])->middleware('auth:sanctum');
-
 
 Route::get('review', [ReviewController::class, 'showReview']);
 Route::post('reviewStore', [ReviewController::class, 'store'])->middleware('auth:sanctum');

@@ -16,18 +16,7 @@ class CreateReviewRatingTable extends Migration
         Schema::create('review_rating', function (Blueprint $table) {
             $table->id();
             $table->integer('estimation')->default('0');
-            $table->string('name', 15)->unique()->nullable();
         });
-
-        (new \App\Models\ReviewRating([
-            'estimation' => 1,
-            'name' => 'bad',
-        ]))->save();
-
-        (new \App\Models\ReviewRating([
-            'estimation' => 2,
-            'name' => 'good',
-        ]))->save();
     }
 
     /**

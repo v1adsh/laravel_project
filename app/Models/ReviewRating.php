@@ -8,7 +8,6 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * @property integer $estimation Оценка
- * @property string $name Название оценки
  */
 
 class ReviewRating extends Model
@@ -26,7 +25,6 @@ class ReviewRating extends Model
      */
     protected $fillable = [
         'estimation',
-        'name',
     ];
 
     public function review(){
