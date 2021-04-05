@@ -29,7 +29,7 @@ class AuthController extends Controller
             return response()->json(['message'=>'Регистрация не удалась']);
         }
 
-        return response()->json(['message'=>$user->jsonSerialize()], 200);
+        return response()->json(['message'=> 'Регистрация прошла успешно'], 200);
     }
 
     public function login(UserLoginRequest $request){
