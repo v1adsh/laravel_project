@@ -20,6 +20,8 @@ class Application extends Model
 
     protected $table = 'application';
 
+    protected $hidden = ['id', 'user_id'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -33,10 +35,10 @@ class Application extends Model
     ];
 
     public function user(){
-        return $this->belongsTo('App\Model\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function status(){
-        return $this->hasOne('App\Model\Status');
+        return $this->hasOne('App\Models\Status');
     }
 }

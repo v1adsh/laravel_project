@@ -23,18 +23,21 @@ class AdminController extends Controller
         $user->email        = $request->get('email');
         $user->number_phone = $request->get('number_phone');
         $user->assignRole($request->get('role'));
-//        $user->role_id      = $request->get('role_id') ? $request->get('role_id') : 1;
 
         if (!$user->save()) {
             return response()->json(['message'=>'Пользователь не создан'], 422);
         }
-        return response()->json(['message'=>$user->jsonSerialize()], 200);
+        return response()->json(['message'=>'Пользователь ' . $user->login . ' создан'], 200);
     }
 
     public function delete(User $user)
     {
+        if (!$user) {
+            return response()->json(['message' => 'Такого пользователя нет'], 404);
+        }
+
         if ($user->delete()) {
-            return response()->json($user->login . ' удалён', 200);
+            return response()->json(['message' =>$user->login . ' удалён'], 200);
         }
         return response()->json(['message' => 'Пользователь не удалён'], 422);
     }
@@ -58,7 +61,7 @@ class AdminController extends Controller
             return response()->json(['message'=>'Изменить данные пользователя не удалось'], 422);
         }
 
-        return response()->json(['message'=>$user->jsonSerialize()], 422);
+        return response()->json(['message'=>'Данные пользователя изменены'], 200);
     }
 
     public function show()
@@ -66,21 +69,21 @@ class AdminController extends Controller
         return response()->json(User::all(), 200);
     }
 
-    public function showById($id)
-    {
-        return response()->json(User::query()->find($id), 200);
-    }
-
     public function updateStatus($id, Request $request)
     {
         $application            = Application::query()->find($id);
-        $application->status_id = $request->input('status_id');
+
+        if (!$application) {
+            return response()->json(['message'=>'Такой заявки не существует'], 404);
+        }
+
+                $application->status_id = $request->input('status_id');
         $application->save();
 
         return response()->json(['message' => 'Статус заявки изменён'], 200);
 
-        if (!$application) {
-            return response()->json(['message'=>'Такой заявки не существует'], 404);
+        if (!$application->save()) {
+            return response()->json(['message' => 'Не удалось изменить статус'], 422);
         }
     }
 

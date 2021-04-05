@@ -32,7 +32,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('user', [AdminController::class, 'show'])->middleware('auth:sanctum');
     Route::post('userUpdate/{user}', [AdminController::class, 'update'])->middleware('auth:sanctum');
     Route::post('userStore', [AdminController::class, 'store'])->middleware('auth:sanctum');
-    Route::get('user/{id}', [AdminController::class, 'showById'])->middleware('auth:sanctum');
     Route::post('userDelete/{user}', [AdminController::class, 'delete'])->middleware('auth:sanctum');
     Route::post('applicationUpdate/{application}', [AdminController::class, 'updateStatus'])->middleware('auth:sanctum');
     Route::post('applicationDeleteAdmin/{application}', [AdminController::class, 'deleteApplication'])->middleware('auth:sanctum');

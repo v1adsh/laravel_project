@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 /**
  * @property integer $estimation Оценка
  * @property integer $user_id Идентификатор пользователя
- * @property integer $review_reting_id Идентификатор оценки отзыва
+ * @property integer $review_id Идентификатор отзыва
  */
 
 class ReviewRating extends Model
@@ -20,6 +20,8 @@ class ReviewRating extends Model
 
     protected $table = 'review_rating';
 
+    protected $hidden = ['user_id', 'review_id'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,7 +30,7 @@ class ReviewRating extends Model
     protected $fillable = [
         'estimation',
         'user_id',
-        'review_rating_id',
+        'review_id',
     ];
 
     public function review(){

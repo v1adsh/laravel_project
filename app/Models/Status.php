@@ -30,6 +30,6 @@ class Status extends Model
     ];
 
     public function application(){
-        return $this->belongsTo('App\Model\Application');
+        return $this->belongsTo('App\Models\Application');
     }
 }

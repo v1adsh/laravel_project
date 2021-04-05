@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
-    //public function showById($id) {
-    //    return response()->json(Application::find($id), 200);
-    //}
-
     public function show() {
         return response()->json(Application::query()->where('user_id', Auth::id())->get(), 200);
     }
@@ -27,16 +23,17 @@ class ApplicationController extends Controller
         if (!$application->save()) {
             return response()->json(['message'=>'Заявка не отправлена'], 422);
         }
-//
-        return response()->json(['message'=>$application->jsonSerialize()], 200);
+        return response()->json(['message'=>'Заявка создана'], 200);
     }
 
     public function delete(Application $application) {
+        if (!$application) {
+            return response()->json(['message' => 'Такой заявки нет'], 404);
+        }
+
         if ($application->user_id == Auth::id()) {
             if ($application->delete()) {
                 return response()->json(['message' => 'Заявка удалена'], 200);
-            } elseif (!$application) {
-                return response()->json(['message' => 'Такой заявки нет'], 404);
             }
         }
         return response()->json(['message' => 'Вы не можете удалить чужую заявку'], 403);

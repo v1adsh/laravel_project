@@ -22,7 +22,7 @@ class ReviewController extends Controller
             return response()->json(['message'=>'Отзыв не отправлен'], 422);
         }
 
-        return response()->json(['message'=>$review->jsonSerialize()], 200);
+        return response()->json(['message'=> 'Отзыв отправлен'], 200);
     }
 
     public function showReview()
@@ -33,6 +33,11 @@ class ReviewController extends Controller
     public function updateReview($id, Request $request)
     {
         $review                         = Review::query()->find($id);
+
+        if (!$review) {
+            return response()->json(['message' => 'Такого отзыва нет'], 404);
+        }
+        
         if ($review->user_id == Auth::id()) {
             $review->datetime           = date("d.m.Y", time());
             $review->description        = $request->input('description');
@@ -40,57 +45,47 @@ class ReviewController extends Controller
             if (!$review->save()) {
                 return response()->json(['message'=>'Отзыв не изменён'], 422);
             }
-            return response()->json(['message'=>$review->jsonSerialize()], 200);
+            return response()->json(['message'=>'Отзыв изменён'], 200);
         }
         return response()->json(['message' => 'Вы не можете изменить чужой отзыв'], 403);
     }
 
     public function deleteReview(Review $review)
     {
+        if (!$review) {
+            return response()->json(['message' => 'Такого отзыва нет'], 404);
+        }
+
         if ($review->user_id == Auth::id()) {
             if ($review->delete()) {
                 return response()->json(['message' => 'Отзыв удалён'], 200);
-            } elseif (!$review) {
-                return response()->json(['message' => 'Такого отзыва нет'], 404);
             }
             return response()->json(['message' => 'Отзыв не удалён'], 422);
         }
         return response()->json(['message' => 'Вы не можете удалить чужой отзыв'], 403);
     }
 
-    public function updateEstimation($id, Request $request)
-    {
-        $review                     = Review::query()->find($id);
-        $review->review_rating_id   = $request->input('estimation');
-
-        if (!$review->save()) {
-            return response()->json(['message'=>'Оценить отзыв не удалось'], 422);
-        }
-
-        return response()->json(['message' => $review->jsonSerialize()], 200);
-    }
-
     public function storeEstimation($reviewId) {
-        $review     = Review::query()->find($reviewId);
+        $review = Review::query()->find($reviewId);
 
-                if (!$review) {
+        if (!$review) {
             return response()->json(['message' => 'Такого отзыва нет'], 404);
         }
 
-        $reviewRating           = new ReviewRating;
-        $reviewRating->user_id  = Auth::id();
-        $reviewRating->estimation++;
-        $reviewRating->review_id = $reviewId;
+        $reviewRating               = new ReviewRating;
+        $reviewRating->user_id      = Auth::id();
+        $reviewRating->estimation   ++;
+        $reviewRating->review_id    = $reviewId;
 
         $reviewRating->save();
-        return response()->json(['message' => $reviewRating->jsonSerialize()], 200);
+        return response()->json(['message' => 'Отзыв оценён'], 200);
     }
 
     public function deleteEstimation(ReviewRating $reviewRating){
         if ($reviewRating->delete()) {
             return response()->json(['message' => 'Оценка отзыва удалена'], 200);
         }
-        return response()->json(['message' => 'Отзыв не удалён'], 422);
+        return response()->json(['message' => 'Оценка отзыва не удалена'], 422);
     }
 
     public function showReviewRating()
