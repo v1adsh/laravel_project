@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * @property integer $estimation Оценка
+ * @property integer $user_id Идентификатор пользователя
+ * @property integer $review_reting_id Идентификатор оценки отзыва
  */
 
 class ReviewRating extends Model
@@ -25,9 +27,11 @@ class ReviewRating extends Model
      */
     protected $fillable = [
         'estimation',
+        'user_id',
+        'review_rating_id',
     ];
 
     public function review(){
-        return $this->belongsTo('App\Model\Review');
+        return $this->belongsTo('App\Models\Review');
     }
 }

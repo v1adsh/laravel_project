@@ -28,16 +28,15 @@ class Review extends Model
      */
     protected $fillable = [
         'user_id',
-        'review_rating_id',
         'datetime',
         'description',
     ];
 
     public function user(){
-        return $this->belongsTo('App\Model\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function reviewRating(){
-        return $this->hasOne('App\Model\ReviewRating');
+        return $this->hasOne('App\Models\ReviewRating');
     }
 }

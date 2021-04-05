@@ -17,6 +17,13 @@ use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 class AuthController extends Controller
 {
     public function store(UserCreateRequest $request){
+        $request->validate([
+            'login' => 'required',
+            'password' => 'required|min:8',
+            'email' => 'required|email',
+            'number_phone' => 'required',
+        ]);
+
         $user               = new User();
         $user->login        = $request->get('login');
         $user->password     = Hash::make($request->get('password'));
@@ -28,7 +35,7 @@ class AuthController extends Controller
             return response()->json(['message'=>'Регистрация не удалась']);
         }
 
-        return response()->json(['message'=>$user->jsonSerialize()]);
+        return response()->json(['message'=>$user->jsonSerialize()], 200);
     }
 
     public function login(UserLoginRequest $request){

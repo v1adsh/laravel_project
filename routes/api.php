@@ -41,7 +41,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('authStore', [AuthController::class, 'store']);
 Route::get('authLogout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-//Route::get('application/{id}', [ApplicationController::class, 'showById']);
 Route::get('application', [ApplicationController::class, 'show'])->middleware('auth:sanctum');
 Route::post('applicationStore', [ApplicationController::class, 'store'])->middleware('auth:sanctum');
 Route::post('applicationDelete/{application}', [ApplicationController::class, 'delete'])->middleware('auth:sanctum');
@@ -50,7 +49,7 @@ Route::get('review', [ReviewController::class, 'showReview']);
 Route::post('reviewStore', [ReviewController::class, 'store'])->middleware('auth:sanctum');
 Route::post('reviewDelete/{review}', [ReviewController::class, 'deleteReview'])->middleware('auth:sanctum');
 Route::post('reviewUpdate/{id}', [ReviewController::class, 'updateReview'])->middleware('auth:sanctum');
-Route::post('reviewRatingUpdate/{id}', [ReviewController::class, 'updateReviewRating'])->middleware('auth:sanctum');
+
+Route::post('reviewRatingStore/{review}', [ReviewController::class, 'storeEstimation'])->middleware('auth:sanctum');
+Route::post('reviewRatingDelete/{reviewRating}', [ReviewController::class, 'deleteEstimation'])->middleware('auth:sanctum');
 Route::get('reviewRating', [ReviewController::class, 'showReviewRating']);
-//Route::get('reviewRating/{id}', [ReviewController::class, 'showReviewRatingById']);
-//Route::get('review/{id}', [ReviewController::class, 'showReviewById'])->middleware('auth:sanctum');

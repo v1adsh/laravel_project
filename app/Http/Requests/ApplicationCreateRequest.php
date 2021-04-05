@@ -24,14 +24,14 @@ class ApplicationCreateRequest extends FormRequest
     public function rules()
     {
         return [
-
+            'description' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-
+            'description.required' => 'Поле описание обязательное'
         ];
     }
 }

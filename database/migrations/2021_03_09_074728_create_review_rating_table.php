@@ -16,6 +16,7 @@ class CreateReviewRatingTable extends Migration
         Schema::create('review_rating', function (Blueprint $table) {
             $table->id();
             $table->integer('estimation')->default('0');
+            $table->unsignedBigInteger('review_id');
         });
     }
 

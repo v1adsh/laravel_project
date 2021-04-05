@@ -6,18 +6,18 @@ use App\Http\Requests\ReviewCreateRequest;
 use App\Http\Requests\ReviewUpdateRequest;
 use App\Models\Review;
 use App\Models\ReviewRating;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use JsonSerializable;
 
 class ReviewController extends Controller
 {
     public function store(ReviewCreateRequest $request){
         $review                     = new Review();
         $review->user_id            = Auth::id();
-        $review->review_rating_id   = null;
         $review->datetime           = date("d.m.Y", time());
         $review->description        = $request->get('description');
-
         if (!$review->save()) {
             return response()->json(['message'=>'Отзыв не отправлен']);
         }
@@ -29,11 +29,6 @@ class ReviewController extends Controller
     {
         return response()->json(Review::all(), 200);
     }
-
-    //public function showReviewById($id)
-    //{
-    //    return response()->json(Review::query()->find($id), 200);
-    //}
 
     public function updateReview($id, Request $request)
     {
@@ -75,17 +70,35 @@ class ReviewController extends Controller
         return response()->json(['message' => $review->jsonSerialize()]);
     }
 
+    public function storeEstimation($reviewId) {
+        $review     = Review::query()->find($reviewId);
+
+                if (!$review) {
+            return response()->json(['message' => 'Такого отзыва нет'], 403);
+        }
+
+        if (!Auth::check()) {
+            return response()->json(['message' => 'Вы не авторизованы'], 403);
+        }
+
+        $reviewRating           = new ReviewRating;
+        $reviewRating->user_id  = Auth::id();
+        $reviewRating->estimation++;
+        $reviewRating->review_id = $reviewId;
+
+        $reviewRating->save();
+        return response()->json(['message' => $reviewRating->jsonSerialize()]);
+    }
+
+    public function deleteEstimation(ReviewRating $reviewRating){
+        if ($reviewRating->delete()) {
+            return response()->json(['message' => 'Оценка отзыва удалена'], 200);
+        }
+        return response()->json(['message' => 'Отзыв не удалён'], 422);
+    }
+
     public function showReviewRating()
     {
         return response()->json(ReviewRating::all(), 200);
-    }
-
-    //public function showReviewRatingById($id){
-    //    return response()->json(ReviewRating::query()->find($id));
-    //}
-
-    public function storeEstimation($id, Request $request){
-        $reviewRating = ReviewRating::query()->find($id);
-        $reviewRating->estimation++;
     }
 }

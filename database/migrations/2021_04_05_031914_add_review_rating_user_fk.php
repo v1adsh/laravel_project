@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddReviewReviewIdFk extends Migration
+class AddReviewRatingUserFk extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddReviewReviewIdFk extends Migration
      */
     public function up()
     {
-        Schema::table('review', function (Blueprint $table) {
-            $table->foreign('review_rating_id')->references('id')->on('review_rating')->onDelete('cascade');
+        Schema::table('review_rating', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 
@@ -25,8 +27,8 @@ class AddReviewReviewIdFk extends Migration
      */
     public function down()
     {
-        Schema::table('review', function (Blueprint $table) {
-            $table->dropForeign(['review_rating_id']);
+        Schema::table('review_rating', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
         });
     }
 }
