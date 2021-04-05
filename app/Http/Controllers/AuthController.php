@@ -26,7 +26,7 @@ class AuthController extends Controller
         $user->assignRole('user');
 
         if (!$user->save()) {
-            return response()->json(['message'=>'Регистрация не удалась']);
+            return response()->json(['message'=>'Регистрация не удалась'], 422);
         }
 
         return response()->json(['message'=> 'Регистрация прошла успешно'], 200);
