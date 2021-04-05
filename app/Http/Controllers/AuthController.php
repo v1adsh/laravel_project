@@ -17,13 +17,6 @@ use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 class AuthController extends Controller
 {
     public function store(UserCreateRequest $request){
-        $request->validate([
-            'login' => 'required',
-            'password' => 'required|min:8',
-            'email' => 'required|email',
-            'number_phone' => 'required',
-        ]);
-
         $user               = new User();
         $user->login        = $request->get('login');
         $user->password     = Hash::make($request->get('password'));
@@ -42,7 +35,7 @@ class AuthController extends Controller
 
         $user = User::query()->where('login', $request->get('login'))->first();
         if (!$user || !Hash::check($request->get('password'), $user->password)) {
-            return response()->json(['message'=>'Попытка входа не удалась'], 400);
+            return response()->json(['message'=>'Попытка входа не удалась'], 422);
         }
 
         $token = $user->createToken('api_token')->plainTextToken;

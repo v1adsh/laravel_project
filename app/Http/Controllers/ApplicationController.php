@@ -25,10 +25,10 @@ class ApplicationController extends Controller
         $application->status_id     = 1;
         $application->description   = $request->get('description');
         if (!$application->save()) {
-            return response()->json(['message'=>'Заявка не отправлена'], 500);
+            return response()->json(['message'=>'Заявка не отправлена'], 422);
         }
 //
-        return response()->json(['message'=>$application->jsonSerialize()]);
+        return response()->json(['message'=>$application->jsonSerialize()], 200);
     }
 
     public function delete(Application $application) {
@@ -39,6 +39,6 @@ class ApplicationController extends Controller
                 return response()->json(['message' => 'Такой заявки нет'], 404);
             }
         }
-        return response()->json(['message' => 'Вы не можете удалить чужую заявку'], 500);
+        return response()->json(['message' => 'Вы не можете удалить чужую заявку'], 403);
     }
 }

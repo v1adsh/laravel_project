@@ -25,9 +25,9 @@ class AdminController extends Controller
 //        $user->role_id      = $request->get('role_id') ? $request->get('role_id') : 1;
 
         if (!$user->save()) {
-            return response()->json(['message'=>'Регистрация не удалась']);
+            return response()->json(['message'=>'Пользователь не создан'], 422);
         }
-        return response()->json(['message'=>$user->jsonSerialize()]);
+        return response()->json(['message'=>$user->jsonSerialize()], 200);
     }
 
     public function delete(User $user)
@@ -35,7 +35,7 @@ class AdminController extends Controller
         if ($user->delete()) {
             return response()->json($user->login . ' удалён', 200);
         }
-        return response()->json(['message' => 'Пользователь не удалён'], 500);
+        return response()->json(['message' => 'Пользователь не удалён'], 422);
     }
 
     public function update($id, Request $request)
@@ -53,10 +53,10 @@ class AdminController extends Controller
         $user->assignRole($request->input('role'));
 
         if (!$user->save()) {
-            return response()->json(['message'=>'Изменить данные пользователя не удалось']);
+            return response()->json(['message'=>'Изменить данные пользователя не удалось'], 422);
         }
 
-        return response()->json(['message'=>$user->jsonSerialize()]);
+        return response()->json(['message'=>$user->jsonSerialize()], 422);
     }
 
     public function show()
@@ -75,6 +75,18 @@ class AdminController extends Controller
         $application->status_id = $request->input('status_id');
         $application->save();
 
-        return response()->json(['message' => 'Статус заявки изменён']);
+        return response()->json(['message' => 'Статус заявки изменён'], 200);
+
+        if (!$application) {
+            return response()->json(['message'=>'Такой заявки не существует'], 404);
+        }
+    }
+
+    public function deleteApplication(Application $application) {
+        if ($application->delete()) {
+            return response()->json(['message' => 'Заявка удалена'], 200);
+        } elseif (!$application) {
+            return response()->json(['message' => 'Такой заявки нет'], 404);
+        }
     }
 }
