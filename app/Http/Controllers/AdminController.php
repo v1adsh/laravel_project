@@ -19,6 +19,7 @@ class AdminController extends Controller
         $user = new User();
         $user->login        = $request->get('login');
         $user->password     = Hash::make($request->get('password'));
+        $user->fio          = $request->get('fio');
         $user->email        = $request->get('email');
         $user->number_phone = $request->get('number_phone');
         $user->assignRole($request->get('role'));
@@ -48,6 +49,7 @@ class AdminController extends Controller
         }
         $user->login        = $request->input('login');
         $user->password     = Hash::make($request->input('password'));
+        $user->fio          = $request->input('fio');
         $user->email        = $request->input('email');
         $user->number_phone = $request->input('number_phone');
         $user->assignRole($request->input('role'));

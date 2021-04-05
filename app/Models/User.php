@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property integer $id Идентификатор
  * @property string $login Логин пользователя
  * @property string $password Пароль пользователя
+ * @property string $fio ФИО пользователя
  * @property string $email Email пользователя
  * @property string $number_phone Номер телефона пользователя
  * @property string $api_token Токен пользователя
@@ -38,6 +39,7 @@ class User extends Authenticatable
     protected $fillable = [
         'login',
         'password',
+        'fio',
         'email',
         'number_phone',
         'api_token',

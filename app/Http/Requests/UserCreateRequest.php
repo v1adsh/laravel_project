@@ -26,6 +26,7 @@ class UserCreateRequest extends FormRequest
         return [
             'login'                 => 'required|string|unique:user,login',
             'password'              => 'required|string|min:8|max:30',
+            'fio'                   => 'required|string',
             'email'                 => 'required|email|string',
             'number_phone'          => 'required|string|min:10'
         ];
@@ -42,6 +43,9 @@ class UserCreateRequest extends FormRequest
           'password.string'         => 'Поле "Пароль" должно содержать только буквы и цифры',
           'password.min:8'          => 'Поле "Пароль" должно содержать не менее 8 символов',
           'password.max:30'         => 'Поле "Пароль" должно содержать не более 30 символов',
+
+          'fio.required'            => 'Поле "ФИО пользователя" обязательно',
+          'fio.sring'               => 'Поле "ФИО пользователя" должно содержать только буквы и цифры',
 
           'email.required'          => 'Поле "Email" обязательно',
           'email.email'             => 'Поле "Email" должно соответствовать своему типу',
