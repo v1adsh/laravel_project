@@ -20,8 +20,6 @@ class Application extends Model
 
     protected $table = 'application';
 
-    protected $hidden = ['id', 'user_id'];
-
     /**
      * The attributes that are mass assignable.
      *

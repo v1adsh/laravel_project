@@ -20,8 +20,6 @@ class ReviewRating extends Model
 
     protected $table = 'review_rating';
 
-    protected $hidden = ['user_id', 'review_id'];
-
     /**
      * The attributes that are mass assignable.
      *
