@@ -40,11 +40,12 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('api_token')->plainTextToken;
+        $role = $user->hasRole('admin');
         $user->api_token = $token;
         $user->save();
         $user = Auth::login($user);
 
-        return response()->json(['message'=>Auth::user()->api_token], 200);
+        return response()->json(['message'=>Auth::user()->api_token, 'role' => $role], 200);
     }
 
     public function logout(Request $request) {
