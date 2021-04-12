@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 
+
+//Добавил коммент
 class AuthController extends Controller
 {
     public function store(UserCreateRequest $request){
