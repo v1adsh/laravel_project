@@ -32,11 +32,7 @@ class Application extends Model
         'description',
     ];
 
-    public function user(){
-        return $this->belongsTo('App\Models\User');
-    }
-
     public function status(){
-        return $this->hasOne('App\Models\Status');
+        return $this->hasOne(Status::class);
     }
 }

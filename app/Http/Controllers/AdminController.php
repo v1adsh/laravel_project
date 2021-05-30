@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Models\Application;
-use App\Models\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use function Symfony\Component\String\u;
 
 class AdminController extends Controller
 {
-    public function store(UserCreateRequest $request)
+    public function store(Request $request)
     {
         $user = new User();
         $user->login        = $request->get('login');
@@ -77,7 +72,7 @@ class AdminController extends Controller
             return response()->json(['message'=>'Такой заявки не существует'], 404);
         }
 
-                $application->status_id = $request->input('status_id');
+        $application->status_id = $request->input('status_id');
         $application->save();
 
         return response()->json(['message' => 'Статус заявки изменён'], 200);

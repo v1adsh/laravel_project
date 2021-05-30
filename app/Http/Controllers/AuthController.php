@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserLoginRequest;
-use Egulias\EmailValidator\Exception\AtextAfterCFWS;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use phpDocumentor\Reflection\DocBlock\Tags\Uses;
-
-
 
 class AuthController extends Controller
 {
-    public function store(UserCreateRequest $request){
+    public function store(Request $request)
+    {
+        //$request = $request->validate([
+        //    'login' => 'required|max:255|string',
+        //    'password' => 'required|max:255|string',
+        //    'fio' => 'required|max:255|string',
+        //    'email' => 'required|max:255|email|string',
+        //    'number_phone' => 'required|max:11|string',
+        //]);
+
         $user               = new User();
         $user->login        = $request->get('login');
         $user->password     = Hash::make($request->get('password'));
@@ -34,7 +34,7 @@ class AuthController extends Controller
         return response()->json(['message'=> 'Регистрация прошла успешно'], 200);
     }
 
-    public function login(UserLoginRequest $request){
+    public function login(Request $request){
 
         $user = User::query()->where('login', $request->get('login'))->first();
         if (!$user || !Hash::check($request->get('password'), $user->password)) {
@@ -42,17 +42,16 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('api_token')->plainTextToken;
-        $role = $user->hasRole('admin');
         $user->api_token = $token;
         $user->save();
         $user = Auth::login($user);
 
-        return response()->json(['message'=>Auth::user()->api_token, 'role' => $role], 200);
+        return response()->json(['message'=>Auth::user()->api_token], 200);
     }
 
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Вы вышли из системы'], 200);
+        return response()->json(['message' => 'Вы вышли из системы', 'apiKey' => Auth::user()->api_token], 200);
     }
 }

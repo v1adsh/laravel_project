@@ -30,6 +30,7 @@ class Review extends Model
         'user_id',
         'datetime',
         'description',
+        'user_login',
     ];
 
     public function user(){
